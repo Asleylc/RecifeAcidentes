@@ -1,0 +1,14 @@
+{
+  "name": "@asleylc/hierarchical-bar-chart-recife-bairros",
+  "main": "7a3c342ec6838947@337.js",
+  "version": "337.0.0",
+  "homepage": "https://observablehq.com/@asleylc/hierarchical-bar-chart-recife-bairros",
+  "author": {
+    "name": "asleylc",
+    "url": "https://observablehq.com/@asleylc"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}

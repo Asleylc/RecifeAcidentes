@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Hierarchical Bar Chart - RECIFE BAIRROS</title>
+<link rel="stylesheet" type="text/css" href="./inspector.css">
+<body>
+<div>
+<p>
+	
+O grafico de Hierarquia abaixo, mostra a quantidade de acidentes dos anos de 2015 ate 2019, com remoção de todos os daddos com erro(valores em texto, ou caracteres especiais), esse grafio mostra a zona da cidade e cada bairro dessa zona. trabalha como uma Arvore, onde a raiz tem N nós e cada Nó tem N folhas.
+
+
+</p>
+</div>
+
+
+<script type="module">
+
+import define from "./index.js";
+import {Runtime, Library, Inspector} from "./runtime.js";
+
+const runtime = new Runtime();
+const main = runtime.module(define, Inspector.into(document.body));
+
+</script>

@@ -1,0 +1,43 @@
+body {
+    font-family: "helvetica"
+}
+
+h4 span {
+    font-size:14px;
+    font-weight:normal;
+}
+  
+h2 {
+    float: right;
+  }
+  
+h2 span {
+    font-size:14px;
+    font-weight:normal;
+}
+
+.single-col {
+    padding-right:15px;
+    padding-left:15px;
+    position: relative;
+}
+
+#mapid, #map-chart {
+    width: 650px;
+    height: 450px;
+}
+
+svg > g{
+     padding-left: 50px;
+  }
+
+.banner {
+    background-color: #0f0f0f;
+}
+
+.content {
+    margin-top: 16px;
+    width: 810px;
+    margin-right: auto;
+    margin-left: auto;
+}
