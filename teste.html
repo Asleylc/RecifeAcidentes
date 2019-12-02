@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+	integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+	crossorigin=""/>
+	<!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+	integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+	crossorigin=""></script>
+    <title> Earthquake Data</title>
+
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" href="css/dc.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+	<script src="js/crossfilter.min.js"></script>
+	<link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/navbar-bottom/">
+	<!-- Bootstrap core CSS -->
+   <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="js/dc.min.js"></script>
+
+	<div class="collapse bg-dark" id="navbarHeader">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 offset-md-1 py-4">
+				  <h4 class="text-white">Contact</h4>
+				  <ul class="list-unstyled">
+					<li><a href="#" class="text-white">Follow on Twitter</a></li>
+					<li><a href="#" class="text-white">Like on Facebook</a></li>
+					<li><a href="#" class="text-white">Email me</a></li>
+				  </ul>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="navbar navbar-dark bg-dark shadow-sm">
+			<div class="container d-flex justify-content-between">
+			  <p class="navbar-brand d-flex align-items-center">
+				<strong>Car Crash</strong>
+			  </p>
+		</div>
+	</div>
+</head>
+<body>
+  <div class="mr-5" style="color: #fff;">.</div>
+  <main role="main" class="container">
+    <div class='row'>
+    	<div id="mapid" class="col-6"></div>
+    	<div class="col-6 ml-md-10">
+    	<div class="row ml-md-10">
+    		<div id='pie-chart' class="col-6">
+		    	<h4> Acidentes com vítimas </h4>
+			</div>
+    	</div>
+    	</div>
+    </div>
+    <!--
+    <div class='row'>
+
+	    <div class='row'>
+	      <div id='scatter-chart' class="col-6">
+	         <h4> scatter </h4>
+	      </div>
+		</div>
+
+		<div class="row">
+			<div id='types-bar-chart' class="col-6">
+		    	<h4> Vítimas por tipo de acidente </h4>
+			</div>
+		</div>
+	</div>-->
+	<div class="mr-5" style="color: #fff;">.</div>
+	<hr/>
+    <div class='row'>
+      <div id='time-chart' class="single-col">
+         <h4> Número de vítimas ao longo dos anos </h4>
+      </div>
+	<div class="row">
+		<div id='vehicle-chart' class="single-col">
+	  		<h4> Quantidade de acidentes por veículos</h4>
+    	</div>   
+	</div>
+    <div class='row'>
+    	<div class="single-col">
+			<table class="table table-hover " id="dc-table-graph">
+		        <thead>
+		            <tr class="header">
+		                <th>Data</th>
+		                <th>Situacao</th>
+		                <th>Natureza</th>
+		                <th>N_vitimas</th>
+		                <th>Descricao</th>
+		                <th>Lat</th>
+		                <th>Lng</th>
+		            </tr>
+		        </thead>
+		    </table>
+	    </div>
+	</div>
+	<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+				  <p class="nav-link" href="#">Equipe: [...] <span class="sr-only">(current)</span></p>
+				</li>
+			  </ul>
+			</div>
+	    </nav>
+  </main>
+  <script type="text/javascript">
+	// Create the dc.js chart objects & link to div
+	
+	//let typesChart=dc.barChart("#types-bar-chart");
+	//let scatterChart=dc.scatterPlot("#scatter-chart");
+
+	let vehicleChart=dc.barChart("#vehicle-chart");
+	let timeChart=dc.lineChart("#time-chart");
+	let pieChart=dc.pieChart("#pie-chart");
+	let tableDataChart=dc.dataTable("#dc-table-graph");
+
+
+	let map = L.map('mapid').setView([-8.0481228,-34.9265626], 11.5);
+	var breweryMarkers = new L.FeatureGroup();
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		attribution: 'copy; <a href="http://www.openstreetmap.org/">OpenStreetMap</a>contributors',
+		maxZoom: 17
+		}).addTo(map);
+
+
+	// load data from a csv file
+	d3.json("data/acidentes_red.json").then(function (json) {
+		let data = json;
+		console.log(data)
+		//01/01/2017-02:55:00
+		var dtgFormat   = d3.timeParse("%d/%m/%Y-%H:%M:%S");
+		var coordFormat   = d3.format(".7f");
+		var intFormat = d3.format("d");
+		data.forEach(function(d){
+			d.dtg = dtgFormat(d.data_completa);
+			d.lat = coordFormat(d.lat);
+			d.lng = coordFormat(d.lng);
+			d.n_vitimas = intFormat(d.n_vitimas);
+			d.envolvidos = intFormat(d.envolvidos);
+		});
+		
+		// Run the data through crossfilter and load our 'facts'
+		var facts = crossfilter(data);
+
+		//Create a dimension for Magnitude
+		var dateDimension =  facts.dimension(function (d){
+			return d.dgt ? d.dgt : 0;	
+		});
+
+		//Create a dimension for Magnitude
+		var vicDim =  facts.dimension(function (d){
+			return d.tipo_vitima ? d.tipo_vitima : "OUTROS";	
+		});
+
+		var typeDim =  facts.dimension(function (d){
+			return d.tipo ? d.tipo : "OUTROS";	
+		});
+
+		var crashDimension =  facts.dimension(function (d){
+				return d.acidentes ? d.acidentes: 'OUTROS';
+		});
+		/*
+		var magDimension =  facts.dimension(function (d){
+			return d.n_vitimas ? d.n_vitimas : 0;	
+		});
+		//Create a group for Magnitude that just counts the number of elements in the group
+		var groupByMagCount= magDimension.group();
+		*/
+		// Create a dimension for Depth
+		
+
+		allDim = facts.dimension(function(d) {return d;});
+		//Create a group for Depth that just counts the number of elements in the group
+		var groupByCrashCount= crashDimension.group();
+
+		var groupByVicDim= vicDim.group();
+
+		var groupByType= typeDim.group();
+
+		/*
+		let groupByCrashCount = crashDimension.group().reduceSum(function(d){
+                return d.n_vitimas;
+            });
+		*/
+		// Create a dimension just for the hour from the datetime in the dataset
+		//hint: use d3.time.hour() function
+		var monthDimension = facts.dimension(function(d){
+			return d3.timeMonth(d.dtg);
+		});
+
+		//Create a group for the hour dimension that just counts the number of elements per hour
+		var groupBymonthCount = monthDimension.group();
+
+
+		var runDimension = facts.dimension(function(d){
+					return  [+d.n_vitimas, +d.envolvidos];
+				});
+      	var speedSumGroup = runDimension.group();
+
+		// Setup the charts
+
+		vehicleChart.width(960)
+			.height(150)
+			.x(d3.scaleBand())
+            .xAxisLabel('Veículos')
+            .xUnits(dc.units.ordinal)
+			.dimension(crashDimension)
+		    .group(groupByCrashCount)
+		    .transitionDuration(500)
+		    .centerBar(false)	
+			.gap(5)
+			.elasticY(true);
+
+     	pieChart.width(300)
+		    .height(300)
+		    .innerRadius(30)
+		    .dimension(vicDim)
+		    .group(groupByVicDim)
+		    .transitionDuration(500)
+		    //.legend(dc.legend().x(0).y(0).gap(5))
+		    .ordinalColors(['#1f78b4', '#b2df8a', '#cab2d6']);
+				   
+
+		tableDataChart.width(960)
+			.height(1000)
+			.dimension(dateDimension)
+			.group(function(d){
+	  	    	return "<b>Fonte:<b> <a href='http://dados.recife.pe.gov.br/dataset/acidentes-de-transito-com-e-sem-vitimas'> dados.recife.pe.gov.br </a>"
+			})
+			.size(5)
+			.columns(['data','situacao', 'natureza','n_vitimas','descricao','lat','lng'])
+     	    .sortBy(function(d){return d.dtg;})
+     	    .order(d3.ascending)
+     	    .on('renderlet', function (table) {
+		      // update map with breweries to match filtered data
+		      breweryMarkers.clearLayers();
+		      allDim.top(Infinity).forEach(function (d){
+			        let circle = L.circle([d.lat, d.lng], 100, {
+					color: '#fd8d3c',
+					weight: 2,
+					fillColor: '#fecc5c',
+					fillOpacity: 0.5
+				});
+				circle.bindPopup("Acidente envolvendo " + d.envolvidos+" veículos com "+d.n_vitimas+ " vítimas");
+				breweryMarkers.addLayer(circle);
+		      });
+		      map.addLayer(breweryMarkers);
+		      map.fitBounds(breweryMarkers.getBounds());
+		    });
+
+  
+	   timeChart.width(960)
+			.height(150)
+     	    .transitionDuration(500)
+			.dimension(monthDimension)
+		    .group(groupBymonthCount)
+		    .elasticY(true)
+		    .x(d3.scaleTime().domain(
+			    d3.extent(data, function(d) { 
+				    return d3.timeMonth(d.dtg); 
+				}))
+			)
+     	    .xAxis();
+		// Render the Charts
+		dc.renderAll();
+
+	});
+	</script>
+	 <!-- Bootstrap javascript files -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		
+</body>
+</html>
