@@ -224,8 +224,8 @@
 		// Setup the charts
 
 
-		vehicleChart.width(700)
-			.height(50)
+		vehicleChart.width(900)
+			.height(350)
 			.x(d3.scaleBand())
             .xAxisLabel('Veículos')
             .xUnits(dc.units.ordinal)
@@ -236,6 +236,7 @@
 			.gap(5)
 			.elasticY(true)			;
 			vehicleChart.yAxis().ticks(5)
+			//vehicleChart.yAxis().tickFormat(function(x) { return x*0.1; })
      	pieChart.width(300)
 		    .height(300)
 		    .innerRadius(30)
