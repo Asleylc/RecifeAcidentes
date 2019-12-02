@@ -233,7 +233,8 @@
 		    .centerBar(false)	
 			.gap(5)
 			.elasticY(true)	;
-
+			vehicleChart.yAxis().tickFormat(function(x) { return x; })
+		
      	pieChart.width(300)
 		    .height(300)
 		    .innerRadius(30)
@@ -276,14 +277,15 @@
 			.height(150)
      	    .transitionDuration(500)
 			.dimension(monthDimension)
+            .xAxisLabel('Meses ao longo dos anos')
+            .yAxisLabel('Vítimas')
 		    .group(groupBymonthCount)
-		    .elasticY(true)
 		    .x(d3.scaleTime().domain(
 			    d3.extent(data, function(d) { 
 				    return d3.timeMonth(d.dtg); 
 				}))
-			)
-     	    .xAxis();
+			).xAxis();
+		timeChart.yAxis().tickFormat(function(x) {return x;})
 		// Render the Charts
 		dc.renderAll();
 
