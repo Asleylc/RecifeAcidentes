@@ -133,6 +133,12 @@
 		maxZoom: 17
 		}).addTo(map);
 
+	var autoIcon = L.icon({
+    iconUrl: 'img/AUTO.png',
+    iconSize:     [40, 40], // size of the icon
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
 
 	// load data from a csv file
 	d3.json("data/acidentes_red.json").then(function (json) {
@@ -148,6 +154,8 @@
 			d.lng = coordFormat(d.lng);
 			d.n_vitimas = intFormat(d.n_vitimas);
 			d.envolvidos = intFormat(d.envolvidos);
+			
+			L.marker([d.lat, d.lon], {icon: autoIcon}).bindPopup("vitimas: "+d.magnitude+"\nTime: "+d.dtg).addTo(map);
 		});
 		
 		// Run the data through crossfilter and load our 'facts'
@@ -241,23 +249,8 @@
 			.size(5)
 			.columns(['data','situacao', 'natureza','n_vitimas','descricao','lat','lng'])
      	    .sortBy(function(d){return d.dtg;})
-     	    .order(d3.ascending)
-     	    .on('renderlet', function (table) {
-		      // update map with breweries to match filtered data
-		      breweryMarkers.clearLayers();
-		      allDim.top(Infinity).forEach(function (d){
-			        let circle = L.circle([d.lat, d.lng], 100, {
-					color: '#fd8d3c',
-					weight: 2,
-					fillColor: '#fecc5c',
-					fillOpacity: 0.5
-				});
-				circle.bindPopup("Acidente envolvendo " + d.envolvidos+" veículos com "+d.n_vitimas+ " vítimas");
-				breweryMarkers.addLayer(circle);
-		      });
-		      map.addLayer(breweryMarkers);
-		      map.fitBounds(breweryMarkers.getBounds());
-		    });
+     	    .order(d3.ascending);
+		
 
   
 	   timeChart.width(960)
