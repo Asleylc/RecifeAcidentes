@@ -34,12 +34,10 @@
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<h1><strong><a href="index.html">Spatial</a></strong> by Templated</h1>
+				<h1><strong><a href="index.html">Recife Acidentes</a></strong></h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="index.html">Home</a></li>
-						<li><a href="generic.html">Generic</a></li>
-						<li><a href="elements.html">Elements</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -48,18 +46,16 @@
 
 		<!-- Banner -->
 			<section id="banner">
-				<h2>Spatial</h2>
-				<p>Lorem ipsum dolor sit amet nullam consequat <br /> interdum vivamus donce sed libero.</p>
-				<ul class="actions">
-					<li><a href="#" class="button special big">Get Started</a></li>
-				</ul>
+				<h2>Recife</h2>
+				
+				
 			</section>
 			<!-- Three -->
 				<section id="three" class="wrapper style1">
 					<div class="container">
 						<header class="major special">
-							<h2>Mauris vulputate dolor</h2>
-							<p>Feugiat sed lorem ipsum magna</p>
+								<h2>Visualização Acidentes de Transito</h2>
+							<p>Recife- Pernambuco</p>
 						</header>
 						<div class="feature-grid">
 							<div >
@@ -94,7 +90,8 @@
 							    	<div class="row ml-md-10">
 							    		<div id='pie-chart' class="col-6">
 									    	<h4> Acidentes com vítimas </h4>
-										</div>
+										</div><p>O gráfico acima tem como principal objetivo destacar a quantidade de vitimas e sem vitimas dos acidentes de trânsito.</p>
+
 							    	</div>
 							    	</div>
 							    </div>
@@ -118,11 +115,13 @@
 							    <div class='row'>
 							      <div id='time-chart' class="single-col">
 							         <h4> Número de vítimas ao longo dos anos</h4>
-							      </div>
+							      </div><p>O gráfico acima tem como principal objetivo destacar qual é o veículo com maior quantidade de acidentes, como por meio da interatividade com os demais, identificar o numero de vitimas de cada veículo.</p>
+
 								<div class="row">
 									<div id='vehicle-chart' class="single-col">
 								  		<h4> Quantidade de acidentes por veículos</h4>
-							    	</div>   
+							    	</div>   <p>O gráfico acima tem como principal objetivo destacar a quantidade de acidentes em cada periodo, dos anos de 2017,2018 e 2019. Com isso podemos ver que a quantidade de acidentes nesse periodo e muito proxima, tendo semelhança em diversos pontos, um dos é que Em junho costuma ter uma baixa nos acidentes e no mês de julho volta a crescer.</p>  
+	
 								</div>
 							    <div class='row'>
 							    	<div class="single-col">
@@ -195,7 +194,7 @@
 
 
 			// load data from a csv file
-			d3.json("data/acidentes_2019.json").then(function (json) {
+			d3.json("data/acidentes_somente_2019.json").then(function (json) {
 				let data = json;
 				console.log(data)
 				//01/01/2017-02:55:00
@@ -275,14 +274,14 @@
 					.x(d3.scaleBand())
 		            .xAxisLabel('Veículos')
 		            .yAxisLabel('⠀⠀⠀⠀⠀⠀⠀⠀')
-            .xUnits(dc.units.ordinal)
-			.dimension(crashDimension)
-		    .group(groupByCrashCount)
-		    .transitionDuration(500)
-		    .centerBar(false)	
-			.gap(5)
-			.elasticY(true)	;
-			vehicleChart.yAxis().ticks(5)
+		            .xUnits(dc.units.ordinal)
+					.dimension(crashDimension)
+				    .group(groupByCrashCount)
+				    .transitionDuration(500)
+				    .centerBar(false)	
+					.gap(5)
+					.elasticY(true);
+				vehicleChart.yAxis().ticks(5)
 
 
 		     	pieChart.width(300)
@@ -341,7 +340,27 @@
 				dc.renderAll();
 
 			});
+			  <br><br><br>
+			  <input id="Hchart" name="hierarchical-bar" type="submit" value="hierarchical-bar">
+			  <br><br><br>
 			</script>
+
+
+
+<script type="text/javascript">
+	
+window.addEventListener("load", function(){
+    $('#Hchart').click(function(){
+        window.location.replace("hierarchical-bar/index.html");
+        		//open abre outra pagina
+    });
+});
+</script>
+ 
+
+
+
+			
 			 <!-- Bootstrap javascript files -->
 		    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
