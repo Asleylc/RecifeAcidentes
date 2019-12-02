@@ -229,7 +229,6 @@
 			.x(d3.scaleBand())
             .xAxisLabel('Veículos')
 		.yAxisLabel('⠀⠀⠀⠀⠀⠀⠀⠀')
-		yAxis().ticks(5)
             .xUnits(dc.units.ordinal)
 			.dimension(crashDimension)
 		    .group(groupByCrashCount)
@@ -237,7 +236,7 @@
 		    .centerBar(false)	
 			.gap(5)
 			.elasticY(true)			;
-			//vehicleChart.yAxis().ticks(5)
+			vehicleChart.yAxis().ticks(5)
 			//vehicleChart.yAxis().tickFormat(function(x) { return x*0.1; })
      	pieChart.width(300)
 		    .height(300)
