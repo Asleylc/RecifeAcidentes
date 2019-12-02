@@ -223,21 +223,6 @@
 
 		// Setup the charts
 
-//teste
-  let yScale = d3.scaleLinear()
-                 .domain([0,d3.max(data, d => d[1])])
-                 //.domain(0, d3.extent(dataset, d => d[1]))
-                 .range([height,0]) 
-
-  
-  let yAxis = d3.axisLeft(yScale)
-                //.ticks(5)
-                .tickValues([0,5000,15000,25000,35000])  
-
-
-
-// teste
-
 
 		vehicleChart.width(960)
 			.height(150)
@@ -249,8 +234,7 @@
 		    .transitionDuration(500)
 		    .centerBar(false)	
 			.gap(5)
-			.elasticY(true)
-			.attr('cy', d => yScale(d[1]));
+			.elasticY(true)	;
 
      	pieChart.width(300)
 		    .height(300)
@@ -308,17 +292,9 @@
 	});
 	</script>
 
-<div>
-
-<p>
-	<br>
 
 
-
-
-</p>
-
-	<script type="text/javascript">
+<script type="text/javascript">
 	
 window.addEventListener("load", function(){
 
@@ -334,7 +310,7 @@ window.addEventListener("load", function(){
  <input id="Hchart" name="hierarchical-bar" type="submit" value="hierarchical-bar">
 
 
-</div>
+
 
 	 <!-- Bootstrap javascript files -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
