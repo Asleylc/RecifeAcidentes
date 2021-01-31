@@ -5,3 +5,7 @@ Javascript, CSS, Html, D3 com Crossfilter, DC.js e Leaflet.
 
 # Link Live
 https://asleylc.github.io/RecifeAcidentes/
+
+[RecifeReduzido.html](RecifeReduzido.html)
+[RecifeAcidentes.html](RecifeAcidentes.html)
+
